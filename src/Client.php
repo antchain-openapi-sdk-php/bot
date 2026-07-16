@@ -364,6 +364,8 @@ use AntChain\BOT\Models\QueryElectrocarDevicepageRequest;
 use AntChain\BOT\Models\QueryElectrocarDevicepageResponse;
 use AntChain\BOT\Models\PushElectrocarOtajobbymoduleRequest;
 use AntChain\BOT\Models\PushElectrocarOtajobbymoduleResponse;
+use AntChain\BOT\Models\QueryElectrocarModuleversiontreeRequest;
+use AntChain\BOT\Models\QueryElectrocarModuleversiontreeResponse;
 use AntChain\BOT\Models\QueryIotplatformPurchaseorderRequest;
 use AntChain\BOT\Models\QueryIotplatformPurchaseorderResponse;
 use AntChain\BOT\Models\ImportIotplatformMeshidRequest;
@@ -803,7 +805,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.17.7",
+                    "sdk_version" => "1.17.9",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -5261,6 +5263,31 @@ class Client {
     public function pushElectrocarOtajobbymoduleEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return PushElectrocarOtajobbymoduleResponse::fromMap($this->doRequest("1.0", "blockchain.bot.electrocar.otajobbymodule.push", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询产品下所有模块及版本号
+     * Summary: 查询产品下所有模块及版本号
+     * @param QueryElectrocarModuleversiontreeRequest $request
+     * @return QueryElectrocarModuleversiontreeResponse
+     */
+    public function queryElectrocarModuleversiontree($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryElectrocarModuleversiontreeEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询产品下所有模块及版本号
+     * Summary: 查询产品下所有模块及版本号
+     * @param QueryElectrocarModuleversiontreeRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryElectrocarModuleversiontreeResponse
+     */
+    public function queryElectrocarModuleversiontreeEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryElectrocarModuleversiontreeResponse::fromMap($this->doRequest("1.0", "blockchain.bot.electrocar.moduleversiontree.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**

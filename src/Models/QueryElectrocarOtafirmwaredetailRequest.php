@@ -14,6 +14,7 @@ class QueryElectrocarOtafirmwaredetailRequest extends Model {
     ];
     public function validate() {
         Model::validateRequired('firmwareId', $this->firmwareId, true);
+        Model::validateRequired('trustProductKey', $this->trustProductKey, true);
     }
     public function toMap() {
         $res = [];
