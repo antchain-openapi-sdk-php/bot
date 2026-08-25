@@ -19,7 +19,6 @@ class UpdateIotagentAgentRequest extends Model {
         'modelId' => 'model_id',
         'skills' => 'skills',
         'mcps' => 'mcps',
-        'tools' => 'tools',
         'instanceId' => 'instance_id',
     ];
     public function validate() {
@@ -71,9 +70,6 @@ class UpdateIotagentAgentRequest extends Model {
                 }
             }
         }
-        if (null !== $this->tools) {
-            $res['tools'] = $this->tools;
-        }
         if (null !== $this->instanceId) {
             $res['instance_id'] = $this->instanceId;
         }
@@ -122,11 +118,6 @@ class UpdateIotagentAgentRequest extends Model {
                 foreach($map['mcps'] as $item) {
                     $model->mcps[$n++] = null !== $item ? McpInfo::fromMap($item) : $item;
                 }
-            }
-        }
-        if(isset($map['tools'])){
-            if(!empty($map['tools'])){
-                $model->tools = $map['tools'];
             }
         }
         if(isset($map['instance_id'])){
@@ -186,12 +177,6 @@ class UpdateIotagentAgentRequest extends Model {
      * @var McpInfo[]
      */
     public $mcps;
-
-    // 工具集合
-    /**
-     * @var string[]
-     */
-    public $tools;
 
     // 实例id，不允许编辑
     /**

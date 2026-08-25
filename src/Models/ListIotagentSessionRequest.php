@@ -12,10 +12,14 @@ class ListIotagentSessionRequest extends Model {
         'agentId' => 'agent_id',
         'userId' => 'user_id',
         'instanceId' => 'instance_id',
+        'pageIndex' => 'page_index',
+        'pageSize' => 'page_size',
     ];
     public function validate() {
         Model::validateRequired('agentId', $this->agentId, true);
         Model::validateRequired('instanceId', $this->instanceId, true);
+        Model::validateRequired('pageIndex', $this->pageIndex, true);
+        Model::validateRequired('pageSize', $this->pageSize, true);
     }
     public function toMap() {
         $res = [];
@@ -33,6 +37,12 @@ class ListIotagentSessionRequest extends Model {
         }
         if (null !== $this->instanceId) {
             $res['instance_id'] = $this->instanceId;
+        }
+        if (null !== $this->pageIndex) {
+            $res['page_index'] = $this->pageIndex;
+        }
+        if (null !== $this->pageSize) {
+            $res['page_size'] = $this->pageSize;
         }
         return $res;
     }
@@ -56,6 +66,12 @@ class ListIotagentSessionRequest extends Model {
         }
         if(isset($map['instance_id'])){
             $model->instanceId = $map['instance_id'];
+        }
+        if(isset($map['page_index'])){
+            $model->pageIndex = $map['page_index'];
+        }
+        if(isset($map['page_size'])){
+            $model->pageSize = $map['page_size'];
         }
         return $model;
     }
@@ -87,5 +103,17 @@ class ListIotagentSessionRequest extends Model {
      * @var string
      */
     public $instanceId;
+
+    // 当前页
+    /**
+     * @var int
+     */
+    public $pageIndex;
+
+    // 页面大小
+    /**
+     * @var int
+     */
+    public $pageSize;
 
 }

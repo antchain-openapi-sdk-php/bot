@@ -19,7 +19,6 @@ class CreateIotagentAgentRequest extends Model {
         'modelId' => 'model_id',
         'skills' => 'skills',
         'mcps' => 'mcps',
-        'tools' => 'tools',
     ];
     public function validate() {
         Model::validateRequired('agentName', $this->agentName, true);
@@ -68,9 +67,6 @@ class CreateIotagentAgentRequest extends Model {
                 }
             }
         }
-        if (null !== $this->tools) {
-            $res['tools'] = $this->tools;
-        }
         return $res;
     }
     /**
@@ -116,11 +112,6 @@ class CreateIotagentAgentRequest extends Model {
                 foreach($map['mcps'] as $item) {
                     $model->mcps[$n++] = null !== $item ? McpInfo::fromMap($item) : $item;
                 }
-            }
-        }
-        if(isset($map['tools'])){
-            if(!empty($map['tools'])){
-                $model->tools = $map['tools'];
             }
         }
         return $model;
@@ -177,11 +168,5 @@ class CreateIotagentAgentRequest extends Model {
      * @var McpInfo[]
      */
     public $mcps;
-
-    // tools
-    /**
-     * @var string[]
-     */
-    public $tools;
 
 }

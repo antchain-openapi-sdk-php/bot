@@ -152,6 +152,10 @@ use AntChain\BOT\Models\PushIotagentMessageRequest;
 use AntChain\BOT\Models\PushIotagentMessageResponse;
 use AntChain\BOT\Models\QuerypushstatusIotagentMessageRequest;
 use AntChain\BOT\Models\QuerypushstatusIotagentMessageResponse;
+use AntChain\BOT\Models\ListfilesIotagentSessionRequest;
+use AntChain\BOT\Models\ListfilesIotagentSessionResponse;
+use AntChain\BOT\Models\FliedownloadIotagentSessionRequest;
+use AntChain\BOT\Models\FliedownloadIotagentSessionResponse;
 use AntChain\BOT\Models\CreateAcsDeviceRequest;
 use AntChain\BOT\Models\CreateAcsDeviceResponse;
 use AntChain\BOT\Models\SendAcsCollectorRequest;
@@ -875,7 +879,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.8",
+                    "sdk_version" => "1.21.11",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -2663,6 +2667,56 @@ class Client {
     public function querypushstatusIotagentMessageEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return QuerypushstatusIotagentMessageResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.message.querypushstatus", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: session下的文件列表
+     * Summary: session下的文件列表
+     * @param ListfilesIotagentSessionRequest $request
+     * @return ListfilesIotagentSessionResponse
+     */
+    public function listfilesIotagentSession($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->listfilesIotagentSessionEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: session下的文件列表
+     * Summary: session下的文件列表
+     * @param ListfilesIotagentSessionRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ListfilesIotagentSessionResponse
+     */
+    public function listfilesIotagentSessionEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ListfilesIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.listfiles", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 文件下载
+     * Summary: 文件下载
+     * @param FliedownloadIotagentSessionRequest $request
+     * @return FliedownloadIotagentSessionResponse
+     */
+    public function fliedownloadIotagentSession($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->fliedownloadIotagentSessionEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 文件下载
+     * Summary: 文件下载
+     * @param FliedownloadIotagentSessionRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return FliedownloadIotagentSessionResponse
+     */
+    public function fliedownloadIotagentSessionEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return FliedownloadIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.fliedownload", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**

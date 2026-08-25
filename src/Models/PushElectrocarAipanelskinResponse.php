@@ -5,6 +5,8 @@ namespace AntChain\BOT\Models;
 
 use AlibabaCloud\Tea\Model;
 
+use AntChain\BOT\Models\AiPanelPushResponse;
+
 class PushElectrocarAipanelskinResponse extends Model {
     protected $_name = [
         'reqMsgId' => 'req_msg_id',
@@ -13,6 +15,7 @@ class PushElectrocarAipanelskinResponse extends Model {
         'success' => 'success',
         'code' => 'code',
         'message' => 'message',
+        'data' => 'data',
     ];
     public function validate() {}
     public function toMap() {
@@ -34,6 +37,9 @@ class PushElectrocarAipanelskinResponse extends Model {
         }
         if (null !== $this->message) {
             $res['message'] = $this->message;
+        }
+        if (null !== $this->data) {
+            $res['data'] = null !== $this->data ? $this->data->toMap() : null;
         }
         return $res;
     }
@@ -60,6 +66,9 @@ class PushElectrocarAipanelskinResponse extends Model {
         }
         if(isset($map['message'])){
             $model->message = $map['message'];
+        }
+        if(isset($map['data'])){
+            $model->data = AiPanelPushResponse::fromMap($map['data']);
         }
         return $model;
     }
@@ -98,5 +107,11 @@ class PushElectrocarAipanelskinResponse extends Model {
      * @var string
      */
     public $message;
+
+    // 是否已成功进入设备下发链路
+    /**
+     * @var AiPanelPushResponse
+     */
+    public $data;
 
 }

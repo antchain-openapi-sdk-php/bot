@@ -10,6 +10,7 @@ class FileInfo extends Model {
         'name' => 'name',
         'type' => 'type',
         'url' => 'url',
+        'id' => 'id',
     ];
     public function validate() {
         Model::validateRequired('name', $this->name, true);
@@ -27,6 +28,9 @@ class FileInfo extends Model {
         if (null !== $this->url) {
             $res['url'] = $this->url;
         }
+        if (null !== $this->id) {
+            $res['id'] = $this->id;
+        }
         return $res;
     }
     /**
@@ -43,6 +47,9 @@ class FileInfo extends Model {
         }
         if(isset($map['url'])){
             $model->url = $map['url'];
+        }
+        if(isset($map['id'])){
+            $model->id = $map['id'];
         }
         return $model;
     }
@@ -66,5 +73,12 @@ class FileInfo extends Model {
      * @var string
      */
     public $url;
+
+    // id
+    /**
+     * @example 11223344556778899
+     * @var string
+     */
+    public $id;
 
 }

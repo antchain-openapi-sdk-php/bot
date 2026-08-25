@@ -12,6 +12,9 @@ class HistoryIotagentSessionResponse extends Model {
         'resultMsg' => 'result_msg',
         'sessionList' => 'session_list',
         'total' => 'total',
+        'pages' => 'pages',
+        'pageIndex' => 'page_index',
+        'pageSize' => 'page_size',
     ];
     public function validate() {}
     public function toMap() {
@@ -30,6 +33,15 @@ class HistoryIotagentSessionResponse extends Model {
         }
         if (null !== $this->total) {
             $res['total'] = $this->total;
+        }
+        if (null !== $this->pages) {
+            $res['pages'] = $this->pages;
+        }
+        if (null !== $this->pageIndex) {
+            $res['page_index'] = $this->pageIndex;
+        }
+        if (null !== $this->pageSize) {
+            $res['page_size'] = $this->pageSize;
         }
         return $res;
     }
@@ -53,6 +65,15 @@ class HistoryIotagentSessionResponse extends Model {
         }
         if(isset($map['total'])){
             $model->total = $map['total'];
+        }
+        if(isset($map['pages'])){
+            $model->pages = $map['pages'];
+        }
+        if(isset($map['page_index'])){
+            $model->pageIndex = $map['page_index'];
+        }
+        if(isset($map['page_size'])){
+            $model->pageSize = $map['page_size'];
         }
         return $model;
     }
@@ -85,5 +106,23 @@ class HistoryIotagentSessionResponse extends Model {
      * @var int
      */
     public $total;
+
+    // 总页数
+    /**
+     * @var int
+     */
+    public $pages;
+
+    // 当前页
+    /**
+     * @var int
+     */
+    public $pageIndex;
+
+    // 页面大小
+    /**
+     * @var int
+     */
+    public $pageSize;
 
 }
