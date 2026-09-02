@@ -33,6 +33,8 @@ use AntChain\BOT\Models\SigncontractAiotdatalinkAntfinanceassistantRequest;
 use AntChain\BOT\Models\SigncontractAiotdatalinkAntfinanceassistantResponse;
 use AntChain\BOT\Models\ChatAiotdatalinkAntfinanceassistantRequest;
 use AntChain\BOT\Models\ChatAiotdatalinkAntfinanceassistantResponse;
+use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantRequest;
+use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantResponse;
 use AntChain\BOT\Models\CreateXrUserticketRequest;
 use AntChain\BOT\Models\CreateXrUserticketResponse;
 use AntChain\BOT\Models\ListXrXrticketpoolRequest;
@@ -879,7 +881,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.11",
+                    "sdk_version" => "1.21.12",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -1172,6 +1174,31 @@ class Client {
     public function chatAiotdatalinkAntfinanceassistantEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return ChatAiotdatalinkAntfinanceassistantResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.antfinanceassistant.chat", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 蚂小财对话流式接口，参考RPC接口文档：https://yuque.antfin.com/pw3zzd/cplb7g/ghfep7wirmlxlg3u#nzb6S
+     * Summary: 蚂小财对话流式接口，参考RPC接口文档：https://yuque.antfin.com/pw3zzd/cplb7g/ghfep7wirmlxlg3u#nzb6S
+     * @param StreamchatAiotdatalinkAntfinanceassistantRequest $request
+     * @return StreamchatAiotdatalinkAntfinanceassistantResponse
+     */
+    public function streamchatAiotdatalinkAntfinanceassistant($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->streamchatAiotdatalinkAntfinanceassistantEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 蚂小财对话流式接口，参考RPC接口文档：https://yuque.antfin.com/pw3zzd/cplb7g/ghfep7wirmlxlg3u#nzb6S
+     * Summary: 蚂小财对话流式接口，参考RPC接口文档：https://yuque.antfin.com/pw3zzd/cplb7g/ghfep7wirmlxlg3u#nzb6S
+     * @param StreamchatAiotdatalinkAntfinanceassistantRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return StreamchatAiotdatalinkAntfinanceassistantResponse
+     */
+    public function streamchatAiotdatalinkAntfinanceassistantEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return StreamchatAiotdatalinkAntfinanceassistantResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.antfinanceassistant.streamchat", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
