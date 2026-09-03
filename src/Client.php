@@ -158,6 +158,8 @@ use AntChain\BOT\Models\ListfilesIotagentSessionRequest;
 use AntChain\BOT\Models\ListfilesIotagentSessionResponse;
 use AntChain\BOT\Models\FliedownloadIotagentSessionRequest;
 use AntChain\BOT\Models\FliedownloadIotagentSessionResponse;
+use AntChain\BOT\Models\FilepreviewIotagentSessionRequest;
+use AntChain\BOT\Models\FilepreviewIotagentSessionResponse;
 use AntChain\BOT\Models\CreateAcsDeviceRequest;
 use AntChain\BOT\Models\CreateAcsDeviceResponse;
 use AntChain\BOT\Models\SendAcsCollectorRequest;
@@ -712,6 +714,8 @@ use AntChain\BOT\Models\QueryTrustiotMiniappRequest;
 use AntChain\BOT\Models\QueryTrustiotMiniappResponse;
 use AntChain\BOT\Models\QueryIotagentUseridsRequest;
 use AntChain\BOT\Models\QueryIotagentUseridsResponse;
+use AntChain\BOT\Models\TestIotagentPluginRequest;
+use AntChain\BOT\Models\TestIotagentPluginResponse;
 use AntChain\BOT\Models\ExecThingsdidOneapiRequest;
 use AntChain\BOT\Models\ExecThingsdidOneapiResponse;
 use AntChain\BOT\Models\StartEvidenceStoreRequest;
@@ -881,7 +885,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.12",
+                    "sdk_version" => "1.21.15",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -2744,6 +2748,31 @@ class Client {
     public function fliedownloadIotagentSessionEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return FliedownloadIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.fliedownload", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 文件预览
+     * Summary: 文件预览
+     * @param FilepreviewIotagentSessionRequest $request
+     * @return FilepreviewIotagentSessionResponse
+     */
+    public function filepreviewIotagentSession($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->filepreviewIotagentSessionEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 文件预览
+     * Summary: 文件预览
+     * @param FilepreviewIotagentSessionRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return FilepreviewIotagentSessionResponse
+     */
+    public function filepreviewIotagentSessionEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return FilepreviewIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.filepreview", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
@@ -9689,6 +9718,51 @@ class Client {
     public function queryIotagentUseridsEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return QueryIotagentUseridsResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.userids.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 测试用
+     * Summary: 测试用
+     * @param TestIotagentPluginRequest $request
+     * @return TestIotagentPluginResponse
+     */
+    public function testIotagentPlugin($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->testIotagentPluginEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 测试用
+     * Summary: 测试用
+     * @param TestIotagentPluginRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return TestIotagentPluginResponse
+     */
+    public function testIotagentPluginEx($request, $headers, $runtime){
+        if (!Utils::isUnset($request->fileObject)) {
+            $uploadReq = new CreateAntcloudGatewayxFileUploadRequest([
+                "authToken" => $request->authToken,
+                "apiCode" => "blockchain.bot.iotagent.plugin.test",
+                "fileName" => $request->fileObjectName
+            ]);
+            $uploadResp = $this->createAntcloudGatewayxFileUploadEx($uploadReq, $headers, $runtime);
+            if (!UtilClient::isSuccess($uploadResp->resultCode, "ok")) {
+                $testIotagentPluginResponse = new TestIotagentPluginResponse([
+                    "reqMsgId" => $uploadResp->reqMsgId,
+                    "resultCode" => $uploadResp->resultCode,
+                    "resultMsg" => $uploadResp->resultMsg
+                ]);
+                return $testIotagentPluginResponse;
+            }
+            $uploadHeaders = UtilClient::parseUploadHeaders($uploadResp->uploadHeaders);
+            UtilClient::putObject($request->fileObject, $uploadHeaders, $uploadResp->uploadUrl);
+            $request->fileId = $uploadResp->fileId;
+            $request->fileObject = null;
+        }
+        Utils::validateModel($request);
+        return TestIotagentPluginResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.plugin.test", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
