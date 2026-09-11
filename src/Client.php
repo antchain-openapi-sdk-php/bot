@@ -35,6 +35,8 @@ use AntChain\BOT\Models\ChatAiotdatalinkAntfinanceassistantRequest;
 use AntChain\BOT\Models\ChatAiotdatalinkAntfinanceassistantResponse;
 use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantRequest;
 use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantResponse;
+use AntChain\BOT\Models\QueryAiotdatalinkAskdataRequest;
+use AntChain\BOT\Models\QueryAiotdatalinkAskdataResponse;
 use AntChain\BOT\Models\CreateXrUserticketRequest;
 use AntChain\BOT\Models\CreateXrUserticketResponse;
 use AntChain\BOT\Models\ListXrXrticketpoolRequest;
@@ -160,6 +162,14 @@ use AntChain\BOT\Models\FliedownloadIotagentSessionRequest;
 use AntChain\BOT\Models\FliedownloadIotagentSessionResponse;
 use AntChain\BOT\Models\FilepreviewIotagentSessionRequest;
 use AntChain\BOT\Models\FilepreviewIotagentSessionResponse;
+use AntChain\BOT\Models\PushIotagentAudioscribeRequest;
+use AntChain\BOT\Models\PushIotagentAudioscribeResponse;
+use AntChain\BOT\Models\ExecIotagentPluginRequest;
+use AntChain\BOT\Models\ExecIotagentPluginResponse;
+use AntChain\BOT\Models\PushIotagentWorkspaceRequest;
+use AntChain\BOT\Models\PushIotagentWorkspaceResponse;
+use AntChain\BOT\Models\ConfirmIotagentWorkspaceRequest;
+use AntChain\BOT\Models\ConfirmIotagentWorkspaceResponse;
 use AntChain\BOT\Models\CreateAcsDeviceRequest;
 use AntChain\BOT\Models\CreateAcsDeviceResponse;
 use AntChain\BOT\Models\SendAcsCollectorRequest;
@@ -885,7 +895,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.15",
+                    "sdk_version" => "1.21.16",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -1203,6 +1213,31 @@ class Client {
     public function streamchatAiotdatalinkAntfinanceassistantEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return StreamchatAiotdatalinkAntfinanceassistantResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.antfinanceassistant.streamchat", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 智能问数sse接口
+     * Summary: 智能问数sse接口
+     * @param QueryAiotdatalinkAskdataRequest $request
+     * @return QueryAiotdatalinkAskdataResponse
+     */
+    public function queryAiotdatalinkAskdata($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryAiotdatalinkAskdataEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 智能问数sse接口
+     * Summary: 智能问数sse接口
+     * @param QueryAiotdatalinkAskdataRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryAiotdatalinkAskdataResponse
+     */
+    public function queryAiotdatalinkAskdataEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryAiotdatalinkAskdataResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.askdata.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
@@ -2773,6 +2808,126 @@ class Client {
     public function filepreviewIotagentSessionEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return FilepreviewIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.filepreview", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 插件接口
+     * Summary: 插件接口
+     * @param PushIotagentAudioscribeRequest $request
+     * @return PushIotagentAudioscribeResponse
+     */
+    public function pushIotagentAudioscribe($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->pushIotagentAudioscribeEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 插件接口
+     * Summary: 插件接口
+     * @param PushIotagentAudioscribeRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return PushIotagentAudioscribeResponse
+     */
+    public function pushIotagentAudioscribeEx($request, $headers, $runtime){
+        if (!Utils::isUnset($request->fileObject)) {
+            $uploadReq = new CreateAntcloudGatewayxFileUploadRequest([
+                "authToken" => $request->authToken,
+                "apiCode" => "blockchain.bot.iotagent.audioscribe.push",
+                "fileName" => $request->fileObjectName
+            ]);
+            $uploadResp = $this->createAntcloudGatewayxFileUploadEx($uploadReq, $headers, $runtime);
+            if (!UtilClient::isSuccess($uploadResp->resultCode, "ok")) {
+                $pushIotagentAudioscribeResponse = new PushIotagentAudioscribeResponse([
+                    "reqMsgId" => $uploadResp->reqMsgId,
+                    "resultCode" => $uploadResp->resultCode,
+                    "resultMsg" => $uploadResp->resultMsg
+                ]);
+                return $pushIotagentAudioscribeResponse;
+            }
+            $uploadHeaders = UtilClient::parseUploadHeaders($uploadResp->uploadHeaders);
+            UtilClient::putObject($request->fileObject, $uploadHeaders, $uploadResp->uploadUrl);
+            $request->fileId = $uploadResp->fileId;
+            $request->fileObject = null;
+        }
+        Utils::validateModel($request);
+        return PushIotagentAudioscribeResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.audioscribe.push", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 插件通用HTTP接口
+     * Summary: 插件通用HTTP接口
+     * @param ExecIotagentPluginRequest $request
+     * @return ExecIotagentPluginResponse
+     */
+    public function execIotagentPlugin($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->execIotagentPluginEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 插件通用HTTP接口
+     * Summary: 插件通用HTTP接口
+     * @param ExecIotagentPluginRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ExecIotagentPluginResponse
+     */
+    public function execIotagentPluginEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ExecIotagentPluginResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.plugin.exec", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 文件上传
+     * Summary: 文件上传
+     * @param PushIotagentWorkspaceRequest $request
+     * @return PushIotagentWorkspaceResponse
+     */
+    public function pushIotagentWorkspace($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->pushIotagentWorkspaceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 文件上传
+     * Summary: 文件上传
+     * @param PushIotagentWorkspaceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return PushIotagentWorkspaceResponse
+     */
+    public function pushIotagentWorkspaceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return PushIotagentWorkspaceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.workspace.push", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 文件上传确认
+     * Summary: 文件上传确认
+     * @param ConfirmIotagentWorkspaceRequest $request
+     * @return ConfirmIotagentWorkspaceResponse
+     */
+    public function confirmIotagentWorkspace($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->confirmIotagentWorkspaceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 文件上传确认
+     * Summary: 文件上传确认
+     * @param ConfirmIotagentWorkspaceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ConfirmIotagentWorkspaceResponse
+     */
+    public function confirmIotagentWorkspaceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ConfirmIotagentWorkspaceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.workspace.confirm", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
