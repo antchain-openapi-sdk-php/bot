@@ -37,6 +37,8 @@ use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantRequest;
 use AntChain\BOT\Models\StreamchatAiotdatalinkAntfinanceassistantResponse;
 use AntChain\BOT\Models\QueryAiotdatalinkAskdataRequest;
 use AntChain\BOT\Models\QueryAiotdatalinkAskdataResponse;
+use AntChain\BOT\Models\ChatAiotdatalinkAskdataRequest;
+use AntChain\BOT\Models\ChatAiotdatalinkAskdataResponse;
 use AntChain\BOT\Models\CreateXrUserticketRequest;
 use AntChain\BOT\Models\CreateXrUserticketResponse;
 use AntChain\BOT\Models\ListXrXrticketpoolRequest;
@@ -895,7 +897,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.16",
+                    "sdk_version" => "1.21.17",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -1238,6 +1240,31 @@ class Client {
     public function queryAiotdatalinkAskdataEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return QueryAiotdatalinkAskdataResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.askdata.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 智能问数chat 接口
+     * Summary: 智能问数chat 接口
+     * @param ChatAiotdatalinkAskdataRequest $request
+     * @return ChatAiotdatalinkAskdataResponse
+     */
+    public function chatAiotdatalinkAskdata($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->chatAiotdatalinkAskdataEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 智能问数chat 接口
+     * Summary: 智能问数chat 接口
+     * @param ChatAiotdatalinkAskdataRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ChatAiotdatalinkAskdataResponse
+     */
+    public function chatAiotdatalinkAskdataEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ChatAiotdatalinkAskdataResponse::fromMap($this->doRequest("1.0", "blockchain.bot.aiotdatalink.askdata.chat", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
