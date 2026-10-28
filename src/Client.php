@@ -172,6 +172,36 @@ use AntChain\BOT\Models\PushIotagentWorkspaceRequest;
 use AntChain\BOT\Models\PushIotagentWorkspaceResponse;
 use AntChain\BOT\Models\ConfirmIotagentWorkspaceRequest;
 use AntChain\BOT\Models\ConfirmIotagentWorkspaceResponse;
+use AntChain\BOT\Models\StatusIotagentMusicRequest;
+use AntChain\BOT\Models\StatusIotagentMusicResponse;
+use AntChain\BOT\Models\LoginurlIotagentMusicRequest;
+use AntChain\BOT\Models\LoginurlIotagentMusicResponse;
+use AntChain\BOT\Models\PlayhistoryIotagentMusicRequest;
+use AntChain\BOT\Models\PlayhistoryIotagentMusicResponse;
+use AntChain\BOT\Models\FavoritesIotagentMusicRequest;
+use AntChain\BOT\Models\FavoritesIotagentMusicResponse;
+use AntChain\BOT\Models\LyricsIotagentMusicRequest;
+use AntChain\BOT\Models\LyricsIotagentMusicResponse;
+use AntChain\BOT\Models\LikeIotagentMusicRequest;
+use AntChain\BOT\Models\LikeIotagentMusicResponse;
+use AntChain\BOT\Models\LogoutIotagentMusicRequest;
+use AntChain\BOT\Models\LogoutIotagentMusicResponse;
+use AntChain\BOT\Models\CallbackIotagentMusicRequest;
+use AntChain\BOT\Models\CallbackIotagentMusicResponse;
+use AntChain\BOT\Models\UsageIotagentSessionRequest;
+use AntChain\BOT\Models\UsageIotagentSessionResponse;
+use AntChain\BOT\Models\ActionIotagentSessioncontextRequest;
+use AntChain\BOT\Models\ActionIotagentSessioncontextResponse;
+use AntChain\BOT\Models\QueryIotagentSessioncontextactionRequest;
+use AntChain\BOT\Models\QueryIotagentSessioncontextactionResponse;
+use AntChain\BOT\Models\QueryAgentDailysummaryRequest;
+use AntChain\BOT\Models\QueryAgentDailysummaryResponse;
+use AntChain\BOT\Models\GenerateAgentDailysummaryRequest;
+use AntChain\BOT\Models\GenerateAgentDailysummaryResponse;
+use AntChain\BOT\Models\ExecAskdataSourceRequest;
+use AntChain\BOT\Models\ExecAskdataSourceResponse;
+use AntChain\BOT\Models\QueryAskdataSourceRequest;
+use AntChain\BOT\Models\QueryAskdataSourceResponse;
 use AntChain\BOT\Models\CreateAcsDeviceRequest;
 use AntChain\BOT\Models\CreateAcsDeviceResponse;
 use AntChain\BOT\Models\SendAcsCollectorRequest;
@@ -728,6 +758,10 @@ use AntChain\BOT\Models\QueryIotagentUseridsRequest;
 use AntChain\BOT\Models\QueryIotagentUseridsResponse;
 use AntChain\BOT\Models\TestIotagentPluginRequest;
 use AntChain\BOT\Models\TestIotagentPluginResponse;
+use AntChain\BOT\Models\ExecDatalinkSourceRequest;
+use AntChain\BOT\Models\ExecDatalinkSourceResponse;
+use AntChain\BOT\Models\QueryDatalinkSourceRequest;
+use AntChain\BOT\Models\QueryDatalinkSourceResponse;
 use AntChain\BOT\Models\ExecThingsdidOneapiRequest;
 use AntChain\BOT\Models\ExecThingsdidOneapiResponse;
 use AntChain\BOT\Models\StartEvidenceStoreRequest;
@@ -897,7 +931,7 @@ class Client {
                     "req_msg_id" => UtilClient::getNonce(),
                     "access_key" => $this->_accessKeyId,
                     "base_sdk_version" => "TeaSDK-2.0",
-                    "sdk_version" => "1.21.18",
+                    "sdk_version" => "1.22.5",
                     "_prod_code" => "BOT",
                     "_prod_channel" => "undefined"
                 ];
@@ -2955,6 +2989,381 @@ class Client {
     public function confirmIotagentWorkspaceEx($request, $headers, $runtime){
         Utils::validateModel($request);
         return ConfirmIotagentWorkspaceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.workspace.confirm", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询设备的云音乐登录状态及用户/VIP 信息。
+     * Summary: 查询设备的云音乐登录状态及用户/VIP 信息。
+     * @param StatusIotagentMusicRequest $request
+     * @return StatusIotagentMusicResponse
+     */
+    public function statusIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->statusIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询设备的云音乐登录状态及用户/VIP 信息。
+     * Summary: 查询设备的云音乐登录状态及用户/VIP 信息。
+     * @param StatusIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return StatusIotagentMusicResponse
+     */
+    public function statusIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return StatusIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.status", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 获取云音乐 H5 OAuth 登录 URL（用于设备端引导用户授权）
+     * Summary: 获取云音乐 H5 OAuth 登录 URL（用于设备端引导用户授权）
+     * @param LoginurlIotagentMusicRequest $request
+     * @return LoginurlIotagentMusicResponse
+     */
+    public function loginurlIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->loginurlIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 获取云音乐 H5 OAuth 登录 URL（用于设备端引导用户授权）
+     * Summary: 获取云音乐 H5 OAuth 登录 URL（用于设备端引导用户授权）
+     * @param LoginurlIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return LoginurlIotagentMusicResponse
+     */
+    public function loginurlIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return LoginurlIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.loginurl", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询云音乐播放历史
+     * Summary: 查询云音乐播放历史
+     * @param PlayhistoryIotagentMusicRequest $request
+     * @return PlayhistoryIotagentMusicResponse
+     */
+    public function playhistoryIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->playhistoryIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询云音乐播放历史
+     * Summary: 查询云音乐播放历史
+     * @param PlayhistoryIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return PlayhistoryIotagentMusicResponse
+     */
+    public function playhistoryIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return PlayhistoryIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.playhistory", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 分页查询红心歌曲
+     * Summary: 分页查询红心歌曲
+     * @param FavoritesIotagentMusicRequest $request
+     * @return FavoritesIotagentMusicResponse
+     */
+    public function favoritesIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->favoritesIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 分页查询红心歌曲
+     * Summary: 分页查询红心歌曲
+     * @param FavoritesIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return FavoritesIotagentMusicResponse
+     */
+    public function favoritesIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return FavoritesIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.favorites", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询指定歌曲的歌词。
+     * Summary: 查询指定歌曲的歌词。
+     * @param LyricsIotagentMusicRequest $request
+     * @return LyricsIotagentMusicResponse
+     */
+    public function lyricsIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->lyricsIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询指定歌曲的歌词。
+     * Summary: 查询指定歌曲的歌词。
+     * @param LyricsIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return LyricsIotagentMusicResponse
+     */
+    public function lyricsIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return LyricsIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.lyrics", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 对一首歌进行红心/取消红心操作。
+     * Summary: 对一首歌进行红心/取消红心操作。
+     * @param LikeIotagentMusicRequest $request
+     * @return LikeIotagentMusicResponse
+     */
+    public function likeIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->likeIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 对一首歌进行红心/取消红心操作。
+     * Summary: 对一首歌进行红心/取消红心操作。
+     * @param LikeIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return LikeIotagentMusicResponse
+     */
+    public function likeIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return LikeIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.like", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 退出云音乐登录，清理 token
+     * Summary: 退出云音乐登录，清理 token
+     * @param LogoutIotagentMusicRequest $request
+     * @return LogoutIotagentMusicResponse
+     */
+    public function logoutIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->logoutIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 退出云音乐登录，清理 token
+     * Summary: 退出云音乐登录，清理 token
+     * @param LogoutIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return LogoutIotagentMusicResponse
+     */
+    public function logoutIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return LogoutIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.logout", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 云音乐回调接口
+     * Summary: 云音乐回调接口
+     * @param CallbackIotagentMusicRequest $request
+     * @return CallbackIotagentMusicResponse
+     */
+    public function callbackIotagentMusic($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->callbackIotagentMusicEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 云音乐回调接口
+     * Summary: 云音乐回调接口
+     * @param CallbackIotagentMusicRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return CallbackIotagentMusicResponse
+     */
+    public function callbackIotagentMusicEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return CallbackIotagentMusicResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.music.callback", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询会话用量（按 sessionId 聚合  usage 记录，返回会话总量 + 轮次明细分页）
+     * Summary: 查询会话用量（按 sessionId 聚合  usage 记录，返回会话总量 + 轮次明细分页）
+     * @param UsageIotagentSessionRequest $request
+     * @return UsageIotagentSessionResponse
+     */
+    public function usageIotagentSession($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->usageIotagentSessionEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询会话用量（按 sessionId 聚合  usage 记录，返回会话总量 + 轮次明细分页）
+     * Summary: 查询会话用量（按 sessionId 聚合  usage 记录，返回会话总量 + 轮次明细分页）
+     * @param UsageIotagentSessionRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return UsageIotagentSessionResponse
+     */
+    public function usageIotagentSessionEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return UsageIotagentSessionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.session.usage", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 会话上下文处理操作
+     * Summary: 会话上下文处理操作
+     * @param ActionIotagentSessioncontextRequest $request
+     * @return ActionIotagentSessioncontextResponse
+     */
+    public function actionIotagentSessioncontext($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->actionIotagentSessioncontextEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 会话上下文处理操作
+     * Summary: 会话上下文处理操作
+     * @param ActionIotagentSessioncontextRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ActionIotagentSessioncontextResponse
+     */
+    public function actionIotagentSessioncontextEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ActionIotagentSessioncontextResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.sessioncontext.action", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询上下文压缩操作结果
+     * Summary: 查询上下文压缩操作结果
+     * @param QueryIotagentSessioncontextactionRequest $request
+     * @return QueryIotagentSessioncontextactionResponse
+     */
+    public function queryIotagentSessioncontextaction($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryIotagentSessioncontextactionEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询上下文压缩操作结果
+     * Summary: 查询上下文压缩操作结果
+     * @param QueryIotagentSessioncontextactionRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryIotagentSessioncontextactionResponse
+     */
+    public function queryIotagentSessioncontextactionEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryIotagentSessioncontextactionResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.sessioncontextaction.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 查询智能体指定日期的聊天总结（只读，不触发生成；content 为空表示尚未生成或当日无对话）
+     * Summary: 查询智能体指定日期的聊天总结（只读，不触发生成；content 为空表示尚未生成或当日无对话）
+     * @param QueryAgentDailysummaryRequest $request
+     * @return QueryAgentDailysummaryResponse
+     */
+    public function queryAgentDailysummary($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryAgentDailysummaryEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 查询智能体指定日期的聊天总结（只读，不触发生成；content 为空表示尚未生成或当日无对话）
+     * Summary: 查询智能体指定日期的聊天总结（只读，不触发生成；content 为空表示尚未生成或当日无对话）
+     * @param QueryAgentDailysummaryRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryAgentDailysummaryResponse
+     */
+    public function queryAgentDailysummaryEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryAgentDailysummaryResponse::fromMap($this->doRequest("1.0", "blockchain.bot.agent.dailysummary.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 触发智能体指定日期的聊天总结生成（异步受理，立即返回；同一智能体同一天 60 秒内重复触发只生成一次，生成结果通过 daily summary 查询接口获取）
+     * Summary: 触发智能体指定日期的聊天总结生成（异步受理，立即返回；同一智能体同一天 60 秒内重复触发只生成一次，生成结果通过 daily summary 查询接口获取）
+     * @param GenerateAgentDailysummaryRequest $request
+     * @return GenerateAgentDailysummaryResponse
+     */
+    public function generateAgentDailysummary($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->generateAgentDailysummaryEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 触发智能体指定日期的聊天总结生成（异步受理，立即返回；同一智能体同一天 60 秒内重复触发只生成一次，生成结果通过 daily summary 查询接口获取）
+     * Summary: 触发智能体指定日期的聊天总结生成（异步受理，立即返回；同一智能体同一天 60 秒内重复触发只生成一次，生成结果通过 daily summary 查询接口获取）
+     * @param GenerateAgentDailysummaryRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return GenerateAgentDailysummaryResponse
+     */
+    public function generateAgentDailysummaryEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return GenerateAgentDailysummaryResponse::fromMap($this->doRequest("1.0", "blockchain.bot.agent.dailysummary.generate", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 智能问数执行查询OB/STARROCKS 接口
+     * Summary: 智能问数执行查询OB/STARROCKS 接口
+     * @param ExecAskdataSourceRequest $request
+     * @return ExecAskdataSourceResponse
+     */
+    public function execAskdataSource($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->execAskdataSourceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 智能问数执行查询OB/STARROCKS 接口
+     * Summary: 智能问数执行查询OB/STARROCKS 接口
+     * @param ExecAskdataSourceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ExecAskdataSourceResponse
+     */
+    public function execAskdataSourceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ExecAskdataSourceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.askdata.source.exec", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 问数查询数据信息
+     * Summary: 问数查询数据信息
+     * @param QueryAskdataSourceRequest $request
+     * @return QueryAskdataSourceResponse
+     */
+    public function queryAskdataSource($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryAskdataSourceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 问数查询数据信息
+     * Summary: 问数查询数据信息
+     * @param QueryAskdataSourceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryAskdataSourceResponse
+     */
+    public function queryAskdataSourceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryAskdataSourceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.askdata.source.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
@@ -9945,6 +10354,56 @@ class Client {
         }
         Utils::validateModel($request);
         return TestIotagentPluginResponse::fromMap($this->doRequest("1.0", "blockchain.bot.iotagent.plugin.test", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 智能问数执行查询OB/STARROCKS 接口
+     * Summary: 智能问数执行查询OB/STARROCKS 接口
+     * @param ExecDatalinkSourceRequest $request
+     * @return ExecDatalinkSourceResponse
+     */
+    public function execDatalinkSource($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->execDatalinkSourceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 智能问数执行查询OB/STARROCKS 接口
+     * Summary: 智能问数执行查询OB/STARROCKS 接口
+     * @param ExecDatalinkSourceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return ExecDatalinkSourceResponse
+     */
+    public function execDatalinkSourceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return ExecDatalinkSourceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.datalink.source.exec", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
+    }
+
+    /**
+     * Description: 问数查询数据信息
+     * Summary: 问数查询数据信息
+     * @param QueryDatalinkSourceRequest $request
+     * @return QueryDatalinkSourceResponse
+     */
+    public function queryDatalinkSource($request){
+        $runtime = new RuntimeOptions([]);
+        $headers = [];
+        return $this->queryDatalinkSourceEx($request, $headers, $runtime);
+    }
+
+    /**
+     * Description: 问数查询数据信息
+     * Summary: 问数查询数据信息
+     * @param QueryDatalinkSourceRequest $request
+     * @param string[] $headers
+     * @param RuntimeOptions $runtime
+     * @return QueryDatalinkSourceResponse
+     */
+    public function queryDatalinkSourceEx($request, $headers, $runtime){
+        Utils::validateModel($request);
+        return QueryDatalinkSourceResponse::fromMap($this->doRequest("1.0", "blockchain.bot.datalink.source.query", "HTTPS", "POST", "/gateway.do", Tea::merge($request), $headers, $runtime));
     }
 
     /**
